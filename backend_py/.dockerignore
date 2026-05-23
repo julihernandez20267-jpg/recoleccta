@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Secrets — pass these as env vars at runtime, never bake into the image
+.env
+
+# Alembic local state
+alembic.ini
+
+# Dev / test artifacts
+*.log
+.pytest_cache/
+.mypy_cache/
