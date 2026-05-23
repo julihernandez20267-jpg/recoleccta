@@ -1,8 +1,7 @@
 import axios from 'axios';
-import { API_BASE_URL } from '@/config/api';
 
 const apiClient = axios.create({
-  baseURL: "http://10.157.28.110:8001/api",
+  baseURL: "https://recoleccta-app.onrender.com/api",
   headers: {
     'Content-Type': 'application/json',
   },
