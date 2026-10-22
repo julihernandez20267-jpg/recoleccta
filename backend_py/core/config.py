@@ -1,5 +1,6 @@
 import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from sqlalchemy.engine import URL
 
 class Settings(BaseSettings):
     DB_HOST: str = "127.0.0.1"
@@ -9,6 +10,7 @@ class Settings(BaseSettings):
     DB_PASS: str = ""
     DB_URL: str | None = None
     MYSQL_PUBLIC_URL: str | None = None
+    DB_SSL_CA: str | None = None
     
     JWT_SECRET: str = "recoleccta-dev-secret-change-me"
     ALGORITHM: str = "HS256"
@@ -27,13 +29,20 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
     @property
-    def database_url(self) -> str:
+    def database_url(self) -> str | URL:
         if self.DB_URL:
             return self.DB_URL
         if self.MYSQL_PUBLIC_URL:
             return self.MYSQL_PUBLIC_URL
-        
-        password_part = f":{self.DB_PASS}" if self.DB_PASS else ""
-        return f"mysql+pymysql://{self.DB_USER}{password_part}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}?charset=utf8mb4"
+
+        return URL.create(
+            "mysql+pymysql",
+            username=self.DB_USER,
+            password=self.DB_PASS or None,
+            host=self.DB_HOST,
+            port=self.DB_PORT,
+            database=self.DB_NAME,
+            query={"charset": "utf8mb4"},
+        )
 
 settings = Settings()
