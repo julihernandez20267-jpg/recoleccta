@@ -1,3 +1,5 @@
+import os
+
 from database import SessionLocal, engine
 import models
 from core.security import get_password_hash
@@ -206,10 +208,15 @@ def seed_db():
         admin = db.query(models.User).filter(models.User.email == admin_email).first()
         
         if not admin:
-            print(f"Creando usuario admin quemado: {admin_email}")
+            admin_password = os.getenv("INITIAL_ADMIN_PASSWORD")
+            if not admin_password:
+                raise RuntimeError(
+                    "Set INITIAL_ADMIN_PASSWORD before creating the initial admin user."
+                )
+            print(f"Creando usuario admin: {admin_email}")
             admin_user = models.User(
                 email=admin_email,
-                password_hash=get_password_hash("Admin2026!"),
+                password_hash=get_password_hash(admin_password),
                 role_id=1, # Admin
                 displayName="Administrador"
             )

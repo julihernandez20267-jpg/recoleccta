@@ -126,10 +126,10 @@
 
 ### 3. Volver a desplegar el backend en Render
 
-1. En Render, crea un **Web Service** y conéctalo al repositorio `julis12223/recolecta` de GitHub.
+1. En Render, crea un **Web Service** y conéctalo al repositorio `julihernandez20267-jpg/recoleccta` de GitHub.
 2. Selecciona **Docker** como entorno y establece `backend_py` como **Root Directory**. Render construirá el servicio con `backend_py/Dockerfile`.
 3. Crea una base de datos MySQL nueva en un proveedor que puedas usar y copia su URL de conexión. La aplicación usa MySQL; no reemplaces esta URL por una conexión PostgreSQL.
-4. En las variables de entorno del servicio de Render, configura `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` y `DB_PASS` con los datos de conexión MySQL; configura `DB_SSL_CA` con el contenido del certificado CA descargado desde Aiven, y `JWT_SECRET` con un secreto nuevo y largo. Agrega las variables `MAIL_*` si quieres habilitar recuperación de contraseña por correo. No publiques credenciales ni certificados en GitHub ni los compartas en mensajes.
+4. En las variables de entorno del servicio de Render, configura `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` y `DB_PASS` con los datos de conexión MySQL; configura `DB_SSL_CA` con el contenido del certificado CA descargado desde Aiven, y `JWT_SECRET` con un secreto nuevo y largo. Genera también un valor secreto para `INITIAL_ADMIN_PASSWORD`; se usará únicamente para crear la cuenta inicial `admin@recoleccta.com`. Agrega las variables `MAIL_*` si quieres habilitar recuperación de contraseña por correo. No publiques credenciales ni certificados en GitHub ni los compartas en mensajes.
 5. Cuando Render termine el despliegue, copia la URL pública del Web Service y configúrala en el `.env` de la raíz como `EXPO_PUBLIC_API_URL=https://tu-api.onrender.com/api`. Esa URL se incluye al iniciar Expo o al generar una nueva compilación de la app.
 6. Inicializa la base de datos nueva ejecutando `python seed.py` desde `backend_py` con las variables de conexión de esa base. Una base nueva no contiene los usuarios ni reportes guardados en la anterior.
 
