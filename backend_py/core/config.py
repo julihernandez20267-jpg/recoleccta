@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     DB_URL: str | None = None
     MYSQL_PUBLIC_URL: str | None = None
     DB_SSL_CA: str | None = None
+    DB_SSL_CA_FILE: str | None = None
     
     JWT_SECRET: str = "recoleccta-dev-secret-change-me"
     ALGORITHM: str = "HS256"

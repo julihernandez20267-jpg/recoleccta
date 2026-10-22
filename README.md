@@ -98,6 +98,7 @@
    ```bash
    python seed.py
    ```
+   En Windows también puedes ejecutar `..\.venv\Scripts\python.exe seed.py` desde `backend_py` sin activar el entorno. Para una base Aiven, configura en `backend_py/.env` las variables MySQL, `INITIAL_ADMIN_PASSWORD` y `DB_SSL_CA_FILE` con la ruta al certificado CA descargado. No subas `.env` ni contraseñas a GitHub.
 6. Inicia el servidor de desarrollo Uvicorn:
    ```bash
    uvicorn main:app --reload --host 0.0.0.0 --port 8001

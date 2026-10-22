@@ -4,7 +4,9 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 from core.config import settings
 
 connect_args = {}
-if settings.DB_SSL_CA:
+if settings.DB_SSL_CA_FILE:
+    connect_args["ssl"] = ssl.create_default_context(cafile=settings.DB_SSL_CA_FILE)
+elif settings.DB_SSL_CA:
     connect_args["ssl"] = ssl.create_default_context(cadata=settings.DB_SSL_CA)
 
 engine = create_engine(
